@@ -1,0 +1,36 @@
+.nav-item.active {
+    background-color: #007bff;
+    border-radius: 0 10px 10px 0 ; /* Membuat sudut membulat */
+    margin: 0; /* Menghilangkan margin agar sesuai lebar sidebar */
+    padding: 1px 2px; /* Mengatur padding untuk mengurangi tinggi kotak */
+}
+
+.nav-item a {
+    color: #333; /* Warna default teks */
+    padding: 8px 10px; /* Mengatur padding default */
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    width: 100%; /* Memastikan elemen a memenuhi lebar kotak */
+}
+
+.nav-item.active a {
+    color: white; /* Warna teks dan ikon saat aktif */
+}
+
+.nav-item.active a .fas {
+    color: white; /* Warna ikon */
+}
+
+.nav-item a:hover {
+    background-color: rgba(0, 123, 255, 0.1); /* Efek hover */
+    border-radius: 10px; /* Menjaga sudut tetap membulat saat hover */
+}
+
+
+/* Tambahan untuk Radio Button */
+.form-group .radio-wrapper {
+    display: inline-block;
+    margin-right: 15px; /* Atur jarak antar radio button */
+}
+
