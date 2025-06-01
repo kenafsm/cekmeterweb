@@ -6,7 +6,7 @@
 <div class="container-fluid">
     <div class="card card-info card-outline">
         <div class="card-header bg-primary">
-            <h3 style="color:white;">Form Ubah Data Pelanggan</h3>
+            <h3 style="color:white;">Form Edit Data Pelanggan</h3>
             @if ($errors->any())
             <div class="alert alert-danger my-3">
                 <ul>
@@ -34,7 +34,7 @@
             @endif
         </div>
         <div class="card-body">
-            <form action="{{ route('pelanggan.update', $pelanggan->id) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('pelanggan.update', $pelanggan->no_sp) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <!-- Menggunakan method PUT untuk update -->
@@ -48,9 +48,12 @@
                         </div>
                         <div class="col-md-11">
                             <input type="text" id="no_sp_lain" name="no_sp_lain" class="form-control"
-                                placeholder="Masukan Sisa Nomor SP" value="{{ substr($pelanggan->no_sp, 2) }}" required
-                                oninput="updateNoSP()">
-                        </div>
+                                placeholder="Masukan Sisa Nomor SP"
+                                value="{{ substr($pelanggan->no_sp, 2) }}"
+                                required
+                                maxlength="5"
+                                oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 5); updateNoSP()">
+                        </div>                        
                     </div>
                 </div>
                 <!-- Menampilkan Nomor SP Lengkap di dalam label -->
@@ -75,9 +78,40 @@
                         placeholder="Masukan Nama Pelanggan" value="{{ $pelanggan->nama_pelanggan }}" required>
                 </div>
                 <div class="form-group">
+                    <label for="status">Status</label>
+                    <input type="text" id="status" name="status" class="form-control"
+                        placeholder="Masukan Status" value="{{ $pelanggan->status }}" required>
+                </div>
+                <div class="form-group">
                     <label for="alamat">Alamat Pelanggan</label>
                     <textarea type="text" id="alamat" name="alamat" class="form-control"
                         required>{{ $pelanggan->alamat }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="tahun_instalasi">Tahun Instalasi</label>
+                    <input type="text" id="tahun_instalasi" name="tahun_instalasi" class="form-control"
+                        placeholder="Masukan Tahun Instalasi" value="{{ $pelanggan->tahun_instalasi }}" required
+                        maxlength="4"
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 4);">
+                </div>
+                <div class="form-group">
+                    <label for="tahun_kadaluarsa">Tahun Kadaluarsa</label>
+                    <input type="text" id="tahun_kadaluarsa" name="tahun_kadaluarsa" class="form-control"
+                        placeholder="Masukan Tahun Kadaluarsa" value="{{ $pelanggan->tahun_kadaluarsa }}" required
+                        maxlength="4"
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 4);">
+                </div>
+                <div class="form-group">
+                    <label for="staf_nip">NIP Staf</label>
+                    <select class="form-control" id="staf_nip" name="staf_nip" required>
+                        <option value="">Pilih Staf</option>
+                        @foreach($staflapangan as $staflpangan)
+                        <option value="{{ $staflpangan->nip }}"
+                            {{ old('staf_nip', $logdata ? $logdata->staf_nip : '') == $staflpangan->nip ? 'selected' : '' }}>
+                            {{ $staflpangan->nip }} - {{ $staflpangan->nama_staff }}
+                        </option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Update Data</button>

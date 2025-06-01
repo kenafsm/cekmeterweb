@@ -16,8 +16,12 @@ class PelangganSeeder extends Seeder
         Pelanggan::create([
             'no_sp' => '01223344',
             'nama_pelanggan' => 'Ken Affila',
+            'status' => 'Aktif',
+            'tahun_instalasi' => '2020',
+            'tahun_kadaluarsa' => '2025',
             'alamat' => ('Giri, Banyuwangi, Jawa Timur'),
-            'wilayah_id' => ('1')
+            'staf_nip' => '1234567890',
+            'kode_wilayah' => ('01')
         ]);
     }
 }

@@ -16,7 +16,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item @if(Request::is('dashboard')) active @endif">
-        <a class="nav-link" href="/dashboard">
+        <a class="nav-link" href="{{ route('dashboard.index') }}">
             <i class="fas fa-fw fa-home"></i>
             <span>Beranda</span>
         </a>
@@ -47,19 +47,26 @@
     </li>
 
     <!-- Nav Item - Data Merk Meter -->
-    <li class="nav-item @if(Route::is('merkmeter.index')) active @endif">
-        <a class="nav-link" href="{{ route('merkmeter.index') }}">
+    <li class="nav-item @if(Route::is('alatmeter.index')) active @endif">
+        <a class="nav-link" href="{{ route('alatmeter.index') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Merk Meter</span>
+            <span>Alat Meter</span>
         </a>
     </li>
 
     <!-- Nav Item - Data Staff -->
-    <li class="nav-item @if(Route::is('staff.index')) active @endif">
-        <a class="nav-link" href="{{ route('staff.index') }}">
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+        aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-fw fa-user"></i>
-            <span>Staff/User</span>
+            <span>Staf Lapangan</span>
         </a>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white collapse-inner rounded">
+                <a class="collapse-item" href="{{ route('staflapangan.rekap') }}">Rekap Staf</a>
+                <a class="collapse-item" href="{{ route('staflapangan.index') }}">Akun Staf</a>
+            </div>
+        </div>
     </li>
 
     <!-- Divider -->

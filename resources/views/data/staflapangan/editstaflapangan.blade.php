@@ -24,15 +24,17 @@
             @method('PUT')
                 <div class="form-group">
                     <label for="nip" class="form-label">NIP</label>
-                    <input type="number" class="form-control" id="nip" name="nip" value="{{ $staflapangans->nip }}">
+                    <input type="number" class="form-control" id="nip" name="nip" value="{{ $staflapangans->nip }}" required
+                    maxlength="5"
+                    oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 5);">
                 </div>
                 <div class="form-group">
                     <label for="namastaff" class="form-label">Nama Staff</label>
-                    <input type="text" class="form-control" id="namastaff"  name="nama_staff" value="{{ $staflapangans->nama_staff }}">
+                    <input type="text" class="form-control" id="namastaff"  name="nama_staff" value="{{ $staflapangans->nama_staff }}" required>
                 </div>
                 <div class="form-group">
                     <label for="notelepon" class="form-label">No. Telepon</label>
-                    <input type="number" class="form-control" id="notelepon" name="no_telepon" value="{{ $staflapangans->no_telepon }}">
+                    <input type="number" class="form-control" id="notelepon" name="no_telepon" value="{{ $staflapangans->no_telepon }}" required>
                 </div>
                 <div class="form-group">
                     <label for="target_cek" class="form-label">Target Cek</label>
@@ -40,7 +42,7 @@
                 </div>
                 <div class="form-group">
                     <label for="wilayah" class="form-label">Wilayah</label>
-                    <select id="kode_wilayah" name="kode_wilayah" class="form-control">
+                    <select id="kode_wilayah" name="kode_wilayah" class="form-control" required>
                         <option value="" disabled>Pilih Wilayah</option>
                         @foreach ($wilayah as $wilayah)
                             <option value="{{ $wilayah['kode_wilayah'] }}"
@@ -60,7 +62,7 @@
                 </div>
                 <div class="form-group">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" value="{{ $staflapangans->password }}">
+                    <input type="password" class="form-control" id="password" name="password" value="{{ $staflapangans->password }}" required>
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Ubah Data</button>

@@ -30,6 +30,12 @@ class LoginController extends Controller
 
         if(Auth::attempt($credentials))
         {
+            $user = Auth::user();
+            if ($user->role === 'staf_lapangan') {
+                Auth::logout();
+                Alert::error('Maaf!', 'Role Staf Lapangan tidak dapat login ke website.');
+                return redirect('/');
+            }
             return redirect('dashboard');
         }
 

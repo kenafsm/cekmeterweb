@@ -6,25 +6,30 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
         Schema::create('pelanggans', function (Blueprint $table) {
-            $table->id();
-            $table->string('no_sp');
-            $table->string('nama_pelanggan');
+            $table->string('no_sp', 10)->primary();
+            $table->string('nama_pelanggan', 255);
             $table->text('alamat');
-            $table->unsignedBigInteger('wilayah_id');  // Foreign key ke tabel wilayah
+            $table->string('staf_nip', 25);  // Changed to match staflapangan.nip length
+            $table->string('status', 50);
+            $table->string('kode_wilayah', 2);
+            $table->string('tahun_instalasi', 4);
+            $table->string('tahun_kadaluarsa', 4);
             $table->timestamps();
+
+            $table->foreign('kode_wilayah')
+                  ->references('kode_wilayah')
+                  ->on('wilayahs');
+                  
+            $table->foreign('staf_nip')
+                  ->references('nip')
+                  ->on('staflapangan');  // Corrected table name
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('pelanggans');
     }

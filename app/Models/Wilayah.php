@@ -9,12 +9,19 @@ class Wilayah extends Model
 {
     use HasFactory;
 
-    protected $table = 'wilayah';
+    protected $table = 'wilayahs';  // Changed from 'wilayah' to match migration
+
+    protected $primaryKey = 'kode_wilayah';
+    public $incrementing = false;
+    protected $keyType = 'string';
 
     protected $fillable = ['kode_wilayah', 'nama_wilayah'];
 
-    // Relasi dengan Pelanggan
     public function pelanggan() {
-        return $this->hasMany(Pelanggan::class, 'wilayah_id', 'id');
+        return $this->hasMany(Pelanggan::class, 'kode_wilayah', 'kode_wilayah');
+    }
+
+    public function staff() {
+        return $this->hasMany(StafLapangan::class, 'kode_wilayah', 'kode_wilayah');
     }
 }

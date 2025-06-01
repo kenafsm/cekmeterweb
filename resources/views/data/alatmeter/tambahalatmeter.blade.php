@@ -28,7 +28,7 @@
                 <div class="form-group">
                     <label for="deskripsi">No Seri</label>
                     <input type="text" id="no_seri" name="no_seri" class="form-control"
-                        placeholder="Masukan Nomor Seri" required>
+                        placeholder="Masukan Nomor Seri" required oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Simpan Data</button>

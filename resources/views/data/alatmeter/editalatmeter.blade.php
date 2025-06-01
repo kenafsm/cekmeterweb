@@ -23,11 +23,12 @@
                 @method('PUT')
                 <div class="form-group">
                     <label for="nama_merk">Nama Merk Meter</label>
-                    <input type="text" id="nama_merk" name="nama_merk" class="form-control" placeholder="Masukan Nama Merk Meter" value="{{old('nama_merk', $alatmeters->nama_merk)}}">
+                    <input type="text" id="nama_merk" name="nama_merk" class="form-control" placeholder="Masukan Nama Merk Meter" value="{{old('nama_merk', $alatmeters->nama_merk)}}" required>
                 </div>
                 <div class="form-group">
                     <label for="no_seri">No Seri Merk Meter</label>
-                    <textarea name="no_seri" id="no_seri" class="form-control" rows="5" placeholder="Masukan Deskripsi Nomor Seri">{{old('nama_merk', $alatmeters->no_seri)}}</textarea>
+                    <input type="text" id="no_seri" name="no_seri" class="form-control" placeholder="Masukan Nama Merk Meter" value="{{old('no_seri', $alatmeters->no_seri)}}" required 
+                    oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Ubah Data</button>

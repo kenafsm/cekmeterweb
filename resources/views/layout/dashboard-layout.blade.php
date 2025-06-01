@@ -121,10 +121,10 @@
     {{-- Alert --}}
     @include('sweetalert::alert')
 
-    {{-- Script Konfirmasi Hapus Data --}}
+    {{-- Script Konfirmasi Hapus Data Pelanggan --}}
     <script>
-        function confirmDelete(id) {
-            console.log(id);
+        function confirmDelete(no_sp) {
+            console.log(no_sp);
         Swal.fire({
             title: 'Apakah Anda Yakin?',
             text: "Data ini akan dihapus secara permanen!",
@@ -137,7 +137,29 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 // Submit form delete
-                document.getElementById('delete-form-' + id).submit();
+                document.getElementById('delete-form-' + encodeURIComponent(no_sp)).submit();
+            }
+        })
+    }
+    </script>
+
+    {{-- Script Konfirmasi Hapus Data Staff --}}
+    <script>
+        function confirmDeleteStaff(nip) {
+            console.log(nip);
+        Swal.fire({
+            title: 'Apakah Anda Yakin?',
+            text: "Data ini akan dihapus secara permanen!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Submit form delete
+                document.getElementById('delete-form-' + encodeURIComponent(nip)).submit();
             }
         })
     }
@@ -196,6 +218,51 @@
         document.getElementById('reviewSection').style.display = 'none'; // Sembunyikan review section
     }
     </script>
+
+    <!-- AJAX untuk Pencarian Data Pelanggan -->
+    <script>
+        $('#cari_pelanggan').click(function () {
+        var no_sp = $('#no_sp_pelanggan').val();
+
+        // AJAX untuk mencari pelanggan berdasarkan No SP
+        $.ajax({
+            url: '{{ route('pelanggan.search') }}',
+            type: 'GET',
+            data: { no_sp: no_sp },
+            success: function (data) {
+                if (data) {
+                    // Jika pelanggan ditemukan, tampilkan data pelanggan
+                    $('#pelanggan_info').html(`
+                        <div class="alert alert-info">
+                            <strong>Pelanggan Ditemukan:</strong> <br>
+                            Nama: ${data.nama_pelanggan} <br>
+                            Alamat: ${data.alamat} <br>
+                            Wilayah: ${data.wilayah} <br>
+                        </div>
+                    `);
+                    $('#pelanggan_id').val(data.no_sp); // Menyimpan ID pelanggan ke dalam hidden input
+                } else {
+                    // Jika pelanggan tidak ditemukan, tampilkan alert error
+                    $('#pelanggan_info').html(`
+                        <div class="alert alert-danger">
+                            Pelanggan tidak ditemukan.
+                        </div>
+                    `);
+                    $('#pelanggan_id').val(''); // Kosongkan input ID pelanggan jika tidak ditemukan
+                }
+            },
+            error: function () {
+                // Jika terjadi error dalam AJAX
+                $('#pelanggan_info').html(`
+                    <div class="alert alert-danger">
+                        Terjadi kesalahan saat mencari pelanggan. Silakan coba lagi.
+                    </div>
+                `);
+            }
+        });
+    });
+    </script>
+
 
 </body>
 

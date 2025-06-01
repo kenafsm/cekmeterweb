@@ -1,13 +1,13 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\MerkMeterController;
+use App\Http\Controllers\AlatMeterController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\LogDataController;
 use App\Http\Controllers\PelangganController;
-use App\Http\Controllers\StaffController;
+use App\Http\Controllers\StafLapanganController;
 use App\Http\Controllers\WilayahController;
 use Illuminate\Support\Facades\Auth;
 
@@ -40,15 +40,18 @@ Route::controller(LoginController::class)->group(function(){
 Route::group(['middleware' => ['auth']], function() {
     Route::get('dashboard', [LoginController::class, 'dashboard'])->name('dashboard');
     // Dashboard
-    Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     // Log Data
     Route::resource('/dashboard/logdata', LogDataController::class);
+    Route::get('/pelanggan/search', [PelangganController::class, 'search'])->name('pelanggan.search');
     // Pelanggan
     Route::resource('/dashboard/pelanggan', PelangganController::class);
     // Merk Meter
-    Route::resource('/dashboard/merkmeter', MerkMeterController::class);
+    Route::resource('/dashboard/alatmeter', AlatMeterController::class);
     // staff/user
-    Route::resource('/dashboard/staff', StaffController::class);
+    Route::resource('/dashboard/staflapangan', StafLapanganController::class);
+    Route::get('/staflapangan/rekap', [StafLapanganController::class, 'rekap'])->name('staflapangan.rekap');
+    Route::get('/staflapangan/detailrekap/{nip}', [StafLapanganController::class, 'detailrekap'])->name('staflapangan.detailrekap');
     // Profil
     Route::get('/profile', [DashboardController::class, 'profile'])->name('profile');
     // Ubah Password

@@ -1,6 +1,6 @@
 @extends('layout.dashboard-layout')
 
-@section('title','Admin Dashboard - Edit Pelanggan')
+@section('title','Admin Dashboard - Edit Log Data')
 
 @section('main-content')
 <div class="container-fluid">
@@ -38,31 +38,40 @@
                 @csrf
                 @method('PUT')
                 <div class="form-group">
-                    <label for="petugas_id">ID Petugas</label>
-                    <select class="form-control" id="petugas_id" name="petugas_id">
-                        <option value="">Pilih ID</option>
-                        @foreach($staff as $petugas)
-                        <option value="{{ $petugas->id }}" {{ $petugas->id == $logdata->merk_meter_id ? 'selected' : ''
-                            }}>{{ $petugas->nip }}-{{ $petugas->nama_staff }}</option>
+                    <label for="staf_nip">NIP Petugas</label>
+                    <select class="form-control" id="staf_nip" name="staf_nip">
+                        <option value="">Pilih Petugas</option>
+                        @foreach($staflapangan as $petugas)
+                        <option value="{{ $petugas->nip }}"
+                            {{ old('staf_nip', $logdata->staf_nip) == $petugas->nip ? 'selected' : '' }}>
+                            {{ $petugas->nip }} - {{ $petugas->nama_staff }}
+                        </option>
                         @endforeach
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="pelanggan_id">No SP Pelanggan</label>
-                    <select class="form-control" id="pelanggan_id" name="pelanggan_id">
-                        <option value="">No SP Pelanggan</option>
-                        @foreach($pelanggan as $pelanggans)
-                        <option value="{{ $pelanggans->id }}" {{ $pelanggans->id == $logdata->pelanggan_id ? 'selected'
-                            : '' }}>{{ $pelanggans->no_sp }}-{{ $pelanggans->nama_pelanggan }}</option>
-                        @endforeach
-                    </select>
+                    <label for="no_sp_pelanggan">No SP Pelanggan</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="no_sp_pelanggan" name="no_sp_pelanggan"
+                            value="{{ old('no_sp_pelanggan', $logdata->pelanggan->no_sp ?? '') }}" placeholder="Masukkan No SP Pelanggan">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="button" id="cari_pelanggan">Cari</button>
+                        </div>
+                    </div>
+                    <input type="hidden" id="pelanggan_id" name="no_sp" value="{{ $logdata->pelanggan_id }}">
+                </div>
+                <div id="pelanggan_info" class="mt-3">
+                    {{-- menampilkan info pelanggan jika ada --}}
+                    @if ($logdata->pelanggan)
+                        <p><strong>Nama Pelanggan:</strong> {{ $logdata->pelanggan->nama_pelanggan }}</p>
+                    @endif
                 </div>
                 <div class="form-group">
-                    <label for="merk_meter_id">Merk Meter</label>
-                    <select class="form-control" id="merk_meter_id" name="merk_meter_id">
-                        <option value="">Pilih Merk Meter</option>
-                        @foreach($merkmeter as $meter)
-                        <option value="{{ $meter->id }}" {{ $meter->id == $logdata->merk_meter_id ? 'selected' : ''
+                    <label for="alat_meter_id">Alat Meter</label>
+                    <select class="form-control" id="alat_meter_id" name="alat_meter_id">
+                        <option value="">Pilih Alat Meter</option>
+                        @foreach($alatmeter as $meter)
+                        <option value="{{ $meter->id }}" {{ $meter->id == $logdata->alat_meter_id ? 'selected' : ''
                             }}>{{ $meter->nama_merk }}</option>
                         @endforeach
                     </select>
@@ -81,6 +90,16 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label for="tahun_instalasi">Tahun Instalasi</label>
+                    <input type="text" id="tahun_instalasi" name="tahun_instalasi" class="form-control"
+                        placeholder="Masukan Tahun Instalasi" required value="{{old('tahun_instalasi', $logdata->tahun_instalasi)}}">
+                </div>
+                <div class="form-group">
+                    <label for="tahun_kadaluarsa">Tahun Kadaluarsa</label>
+                    <input type="text" id="tahun_kadaluarsa" name="tahun_kadaluarsa" class="form-control"
+                        placeholder="Masukan Tahun Kadaluarsa" required value="{{old('tahun_kadaluarsa', $logdata->tahun_kadaluarsa)}}">
+                </div>
+                <div class="form-group">
                     <label for="ket_kondisi">Keterangan Kondisi Merk Meter <span>(Opsional)</span></label>
                     <textarea name="ket_kondisi" id="ket_kondisi" class="form-control" rows="3"
                         placeholder="Masukan Keterangan Kondisi Merk Meter">{{old('ket_kondisi', $logdata->ket_kondisi)}}</textarea>
@@ -94,7 +113,7 @@
                     @endif
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Simpan Data</button>
+                    <button type="submit" class="btn btn-primary">Ubah Data</button>
                     <button type="reset" class="btn btn-danger">Reset Data</button>
                 </div>
             </form>
